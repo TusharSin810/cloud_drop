@@ -2,7 +2,7 @@ import { ShoppingCart, Package, Shield } from "lucide-react";
 
 export default function Work(){
     return(
-        <section className="bg-primary text-high2 py-16">
+        <section className="bg-gradient-to-b from-transparent via-primary to-primary text-high2 py-16">
             <div className="max-w-6xl mx-auto px-6">
             <h2 className="text-5xl font-bold mb-12">
                 HOW WE WORK

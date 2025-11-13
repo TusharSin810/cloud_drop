@@ -47,7 +47,7 @@ export default function VantaClouds({
           gyroControls: false,
           minHeight: 0,
           minWidth: 0,
-          scale: 1,
+          scale: 1.5,
           scaleMobile: 2.0,
           backgroundColor: 0x000000,
           speed: .8,
