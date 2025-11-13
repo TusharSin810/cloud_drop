@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function Hero(){
     return(
-        <div className="bg-primary h-max flex justify-center pt-14">
+        <div className="bg-transparent h-max flex justify-center pt-14">
             <div className="text-center">
                 <h1 className="text-8xl font-bold text-high2">
                     CLOUD <span className="text-high1">DROP</span>

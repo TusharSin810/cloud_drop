@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Navbar(){
     return(
  <header>
-      <div className="flex justify-evenly p-2 gap-34 bg-primary border-b-2 border-white/20">
+      <div className="flex justify-evenly p-2 gap-34 bg-transparent">
         <div>
             <Link href="/">
             <img className="text-xl font-extrabold tracking-tight h-12" src="/images/logo.png"></img>
