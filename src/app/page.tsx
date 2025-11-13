@@ -6,10 +6,10 @@ import Work from "@/components/Work";
 export default function Home() {
   return (
     <div>
-      <Navbar />
-      <Hero />
-      <Work />
-      <Features />
+        <Navbar />
+        <Hero />
+        <Work />
+        <Features />
     </div>
   );
 }

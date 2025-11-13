@@ -17,7 +17,7 @@ export default function Navbar(){
         </div>
         <div className="flex items-center gap-4 font-mono">
             <a href="/login" className="text-high2 font-bold">LOG IN</a>
-            <button className="text-high2 border-1 w-14 h-8 rounded-2xl text-sm hover:cursor-pointer hover:scale-105 hover:bg-high1">&#x21d7;</button>
+            <button className="text-high2 border-1 border-high1 w-14 h-8 rounded-2xl text-sm hover:cursor-pointer hover:scale-105 hover:bg-high1">&#x21d7;</button>
         </div>
                 
       </div>
