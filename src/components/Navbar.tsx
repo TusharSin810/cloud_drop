@@ -6,7 +6,6 @@ import {signIn, signOut, useSession} from "next-auth/react"
 export default function Navbar(){
 
     const session = useSession();
-
     return(
  <header>
       <div className="flex justify-evenly p-2 gap-34 bg-transparent">
@@ -26,14 +25,18 @@ export default function Navbar(){
               <>
                 <a className="text-high2 font-bold">LOG OUT</a>
                 <PrimaryButton onClick={() => {
-                  signOut();
+                  signOut({
+                    callbackUrl:"/"
+                  });
                 }}>&#x21d7;</PrimaryButton>
               </>
             ) : ( 
             <>
               <a className="text-high2 font-bold">LOG IN</a> 
-              <PrimaryButton onClick={() => {
-                signIn("google")
+              <PrimaryButton onClick={async () => {
+                await signIn("google", {
+                  callbackUrl: "/"
+                });
               }}>&#x21d7;</PrimaryButton>
             </>
             )}

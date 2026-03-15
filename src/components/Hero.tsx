@@ -2,9 +2,11 @@
 import Image from "next/image"
 import { PrimaryButton } from "./Button"
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Hero(){
     const router = useRouter();
+    const session = useSession();
 
     return(
         <div className="bg-transparent h-max flex justify-center pt-14">
@@ -15,7 +17,9 @@ export default function Hero(){
                 <h2 className="text-5xl font-semibold mt-4 text-high1 mb-3">
                  DRONE <span className="text-high2">DELIVERY</span>
                 </h2>
-                <PrimaryButton onClick={() => {router.push("/dashboard")}}>ORDER DELIVERY</PrimaryButton>
+                <PrimaryButton onClick={() => {
+                    {session.data?.user? (router.push("/dashboard")):(router.push("/login"))}
+                }}>ORDER DELIVERY</PrimaryButton>
 
                 <Image src="/images/Drone.png" height={1400} width={1400} alt="Drone Image"></Image>
 

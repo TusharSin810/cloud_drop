@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import VantaClouds from "@/components/VantaCouds";
 import { Provider } from "@/lib/providers";
-import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider>
-          <VantaClouds />
           <div className="relative z-10">
-            <Navbar />
             {children}
           </div>
         </Provider>
