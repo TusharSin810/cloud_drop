@@ -1,16 +1,21 @@
+"use client";
 import Image from "next/image"
+import { PrimaryButton } from "./Button"
+import { useRouter } from "next/navigation";
 
 export default function Hero(){
+    const router = useRouter();
+
     return(
         <div className="bg-transparent h-max flex justify-center pt-14">
             <div className="text-center">
                 <h1 className="text-8xl font-bold text-high2">
                     CLOUD <span className="text-high1">DROP</span>
                 </h1>
-                <h2 className="text-5xl font-semibold mt-4 text-high1">
+                <h2 className="text-5xl font-semibold mt-4 text-high1 mb-3">
                  DRONE <span className="text-high2">DELIVERY</span>
                 </h2>
-                <button className="border-1 w-40 h-10 rounded-4xl text-sm mt-6 text-high2 hover:bg-high1 border-high1 font-semibold hover:cursor-pointer hover:text-primary">ORDER DELIVERY</button>
+                <PrimaryButton onClick={() => {router.push("/dashboard")}}>ORDER DELIVERY</PrimaryButton>
 
                 <Image src="/images/Drone.png" height={1400} width={1400} alt="Drone Image"></Image>
 

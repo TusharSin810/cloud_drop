@@ -1,6 +1,12 @@
+"use client";
 import Link from "next/link";
+import { PrimaryButton } from "./Button";
+import {signIn, signOut, useSession} from "next-auth/react"
 
 export default function Navbar(){
+
+    const session = useSession();
+
     return(
  <header>
       <div className="flex justify-evenly p-2 gap-34 bg-transparent">
@@ -16,8 +22,22 @@ export default function Navbar(){
           <a href="#features" className="text-high2/70">FAQ</a>
         </div>
         <div className="flex items-center gap-4 font-mono">
-            <a href="/login" className="text-high2 font-bold">LOG IN</a>
-            <button className="text-high2 border-1 border-high1 w-14 h-8 rounded-2xl text-sm hover:cursor-pointer hover:scale-105 hover:bg-high1">&#x21d7;</button>
+            {session.data?.user? (
+              <>
+                <a className="text-high2 font-bold">LOG OUT</a>
+                <PrimaryButton onClick={() => {
+                  signOut();
+                }}>&#x21d7;</PrimaryButton>
+              </>
+            ) : ( 
+            <>
+              <a className="text-high2 font-bold">LOG IN</a> 
+              <PrimaryButton onClick={() => {
+                signIn("google")
+              }}>&#x21d7;</PrimaryButton>
+            </>
+            )}
+            
         </div>
                 
       </div>

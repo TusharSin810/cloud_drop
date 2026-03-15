@@ -48,7 +48,7 @@ const Footer = () => {
       </div>
 
       <div className="border-t border-secondary/80 container mx-auto max-w-screen-xl px-4 mt-6 pt-4 flex flex-col md:flex-row items-center justify-between text-sm text-high2">
-        <p>&copy; 2025 ResuRabbit - Job Portal. All rights reserved.</p>
+        <p>&copy; 2026 ClouldDrop. All rights reserved.</p>
         <div className="flex gap-4 mt-2 md:mt-0 text-high1">
           <Link href="#" className="hover:text-high1/50"><FaFacebookF /></Link>
           <Link href="#" className="hover:text-high1/50"><FaYoutube /></Link>
