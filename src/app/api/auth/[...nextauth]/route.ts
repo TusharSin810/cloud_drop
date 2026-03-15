@@ -12,19 +12,28 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
         })
     ],
-    // callbacks: {
-    //     async signIn({user, account, profile, email, credentials}){
-    //         if(account?.provider == "google"){
-    //             const email = user.email;
-    //             if(!email){
-    //                 return false;
-    //             }
-    //             const userDb = await prismaClient.user.upsert({
-    //             })
-    //         }    
-    //         return true
-    //     },
-    // }
+    callbacks: {
+        async signIn({user, account, profile, email, credentials}){
+            if(account?.provider == "google"){
+                const email = user.email;
+                const name = user.name;
+                if(!email || !name){
+                    return false;
+                }
+                const userDb = await prismaClient.user.upsert({
+                    where:{
+                        email: email,
+                    },
+                    update:{},
+                    create:{
+                        email:email,
+                        name: name,
+                    }
+                })
+            }    
+            return true
+        },
+    }
 })
 
 export {handler as GET, handler as POST}
