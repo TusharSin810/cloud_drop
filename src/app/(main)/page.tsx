@@ -7,11 +7,19 @@ import Work from "@/components/Work";
 export default function Home() {
   return (
     <div>
+      <section id="home">
         <Hero />
+      </section>
+      <section id="features">
         <Work />
-        <LandingVideoPlayer src="/gallery/Drone.mp4" />
+      </section>
+      <LandingVideoPlayer src="/gallery/Drone.mp4" />
+      <section id="work">
         <Features />
+      </section>
+      <section id="faq">
         <Footer />
+      </section>
     </div>
   );
 }
