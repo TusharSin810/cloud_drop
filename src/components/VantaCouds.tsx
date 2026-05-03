@@ -8,6 +8,10 @@ type VantaEffect = {
 
 type VantaOptions = Record<string, unknown>;
 
+type VantaAPI = {
+  CLOUDS2: (options: VantaOptions) => VantaEffect;
+};
+
 export default function VantaClouds({
   enabled = true,
   mobileDisabled = true,
@@ -22,7 +26,13 @@ export default function VantaClouds({
 
   useEffect(() => {
     if (!enabled) return;
-    if (mobileDisabled && typeof window !== "undefined" && window.innerWidth < 768) return;
+
+    if (
+      mobileDisabled &&
+      typeof window !== "undefined" &&
+      window.innerWidth < 768
+    )
+      return;
 
     let cancelled = false;
 
@@ -30,9 +40,16 @@ export default function VantaClouds({
       const waitFor = (name: "THREE" | "VANTA", timeout = 5000) =>
         new Promise<void>((resolve, reject) => {
           const start = Date.now();
+
           (function check() {
-            if ((window as unknown as Record<string, unknown>)[name]) return resolve();
-            if (Date.now() - start > timeout) return reject(new Error(`${name} not found`));
+            const win = window as unknown as Record<string, unknown>;
+
+            if (win[name]) return resolve();
+
+            if (Date.now() - start > timeout) {
+              return reject(new Error(`${name} not found`));
+            }
+
             setTimeout(check, 50);
           })();
         });
@@ -43,9 +60,9 @@ export default function VantaClouds({
 
         if (cancelled || !containerRef.current) return;
 
-        const VANTA = (window as unknown as { VANTA: any }).VANTA;
+        const win = window as unknown as { VANTA: VantaAPI };
 
-        const v = VANTA?.CLOUDS2?.({
+        const effect = win.VANTA?.CLOUDS2({
           el: containerRef.current,
           mouseControls: false,
           touchControls: false,
@@ -59,7 +76,7 @@ export default function VantaClouds({
           ...options,
         });
 
-        vantaRef.current = v;
+        vantaRef.current = effect;
       } catch (err) {
         console.warn("Vanta failed to initialize:", err);
       }
@@ -69,6 +86,7 @@ export default function VantaClouds({
 
     return () => {
       cancelled = true;
+
       if (vantaRef.current) {
         vantaRef.current.destroy();
         vantaRef.current = null;
@@ -88,6 +106,7 @@ export default function VantaClouds({
         strategy="afterInteractive"
         src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.clouds2.min.js"
       />
+
       <div
         ref={containerRef}
         aria-hidden
@@ -96,7 +115,7 @@ export default function VantaClouds({
           inset: 0,
           zIndex: 0,
           width: "100%",
-          height: "100vh", // fixed this too
+          height: "100vh",
           pointerEvents: "none",
         }}
       />
