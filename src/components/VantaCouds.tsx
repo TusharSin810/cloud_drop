@@ -2,6 +2,12 @@
 import { useEffect, useRef } from "react";
 import Script from "next/script";
 
+type VantaEffect = {
+  destroy: () => void;
+};
+
+type VantaOptions = Record<string, unknown>;
+
 export default function VantaClouds({
   enabled = true,
   mobileDisabled = true,
@@ -9,24 +15,23 @@ export default function VantaClouds({
 }: {
   enabled?: boolean;
   mobileDisabled?: boolean;
-  options?: Record<string, any>;
+  options?: VantaOptions;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const vantaRef = useRef<any>(null);
+  const vantaRef = useRef<VantaEffect | null>(null);
 
   useEffect(() => {
     if (!enabled) return;
-    if (mobileDisabled && typeof window !== "undefined" && window.innerWidth < 10) return;
+    if (mobileDisabled && typeof window !== "undefined" && window.innerWidth < 768) return;
 
     let cancelled = false;
 
     async function init() {
-      const waitFor = (name: string, timeout = 5000) =>
+      const waitFor = (name: "THREE" | "VANTA", timeout = 5000) =>
         new Promise<void>((resolve, reject) => {
           const start = Date.now();
           (function check() {
-            // @ts-ignore
-            if ((window as any)[name]) return resolve();
+            if ((window as unknown as Record<string, unknown>)[name]) return resolve();
             if (Date.now() - start > timeout) return reject(new Error(`${name} not found`));
             setTimeout(check, 50);
           })();
@@ -36,11 +41,11 @@ export default function VantaClouds({
         await waitFor("THREE");
         await waitFor("VANTA");
 
-        if (cancelled) return;
-        if (!containerRef.current) return;
+        if (cancelled || !containerRef.current) return;
 
-        // @ts-ignore
-        const v = (window as any).VANTA?.CLOUDS2?.({
+        const VANTA = (window as unknown as { VANTA: any }).VANTA;
+
+        const v = VANTA?.CLOUDS2?.({
           el: containerRef.current,
           mouseControls: false,
           touchControls: false,
@@ -50,7 +55,7 @@ export default function VantaClouds({
           scale: 1.5,
           scaleMobile: 2.0,
           backgroundColor: 0x000000,
-          speed: .8,
+          speed: 0.8,
           ...options,
         });
 
@@ -64,12 +69,12 @@ export default function VantaClouds({
 
     return () => {
       cancelled = true;
-      if (vantaRef.current && typeof vantaRef.current.destroy === "function") {
+      if (vantaRef.current) {
         vantaRef.current.destroy();
         vantaRef.current = null;
       }
     };
-  }, [enabled, mobileDisabled, JSON.stringify(options)]);
+  }, [enabled, mobileDisabled, options]);
 
   return (
     <>
@@ -91,8 +96,8 @@ export default function VantaClouds({
           inset: 0,
           zIndex: 0,
           width: "100%",
-          height: "screen",
-          pointerEvents: "none", 
+          height: "100vh", // fixed this too
+          pointerEvents: "none",
         }}
       />
     </>
