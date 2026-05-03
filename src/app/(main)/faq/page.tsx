@@ -136,7 +136,7 @@ export default function FAQ() {
           </h2>
           <p className="text-high2/40 font-mono text-sm max-w-xl">
             Everything you need to know about drone delivery with CloudDrop.
-            Can't find an answer?{" "}
+            {"Can't find an answer?"}{" "}
             <a href="mailto:support@clouddrop.in" className="text-high1 hover:underline underline-offset-4">
               Contact support.
             </a>
